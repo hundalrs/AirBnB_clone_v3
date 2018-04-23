@@ -97,3 +97,7 @@ class DBStorage():
         close method on the class Session
         '''
         self.__session.close()
+
+    def get(self, cls, id):
+        ''' return object bsed on classname'''
+
