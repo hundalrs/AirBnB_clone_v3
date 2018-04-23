@@ -152,3 +152,20 @@ class testFileStorage(unittest.TestCase):
             json_dict = json.load(fd)
         for key, value in json_dict.items():
             self.assertTrue(value['id'] != my_id)
+
+    def test_count(self):
+        fs = FileStorage()
+        new = State()
+        fs.new(new)
+        fs.save()
+        stored = self.storage.all('State')
+        self.assertTrue(len(stored), self.storage.count('State'))
+
+    def test_get(self):
+        fs = FileStorage()
+        new = State()
+        new.name = "Wyoming"
+        fs.new(new)
+        my_id = new.id
+        fs.save()
+        self.assertTrue(new, self.storage.get(State, my_id))
