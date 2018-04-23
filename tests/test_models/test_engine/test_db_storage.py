@@ -65,3 +65,16 @@ class testDBStorage(unittest.TestCase):
         all_stored = models.storage.all()
         models.storage.delete(state)
         self.assertTrue(all_stored["State." + state.id])
+
+    def test_get(self):
+        '''test get method'''
+        state = State(name="Wyoming")
+        my_id = state.id
+        state.save()
+        self.assertTrue(state, get(State, my_id))
+
+    def test_count(self):
+        '''test count'''
+        state = State(name="New Jersey")
+        stored = models.storage.all('State')
+        self.assertTrue(len(stored), models.storage.get('State'))
