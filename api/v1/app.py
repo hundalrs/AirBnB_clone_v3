@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 '''Module setting up API'''
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -13,6 +13,10 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 def storage_closer(exceptions):
     ''' closes storage '''
     storage.close()
+
+@app.errorhandler(404)
+def page_not_found(e):
+        return jsonify({ "error": "Not found" })
 
 if __name__ == "__main__":
     app.run(host=('0.0.0.0'),
