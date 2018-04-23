@@ -10,10 +10,10 @@ app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
 @app.teardown_appcontext
-def storage_closer():
+def storage_closer(exceptions):
     ''' closes storage '''
     storage.close()
 
 if __name__ == "__main__":
-    app.run(host=(getenv('HBNB_API_HOST', '0.0.0.0')),
-            port=(getenv('HBNB_API_PORT', port=5000)))
+    app.run(host=('0.0.0.0'),
+            port=(5000))

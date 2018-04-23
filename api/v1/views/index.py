@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 '''module that returns JSON status "OK"'''
 
-from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, Blueprint
 
 
 app_views = Blueprint('app_views', __name__)
