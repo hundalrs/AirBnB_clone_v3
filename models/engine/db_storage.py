@@ -100,4 +100,17 @@ class DBStorage():
 
     def get(self, cls, id):
         ''' return object bsed on classname'''
+        objs = self.all(cls).values()
 
+        if len(objs) is None:
+            return None
+        for obj in objs:
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        '''returns the number of objects with cls name '''
+        objs = self.all(cls).values()
+
+        return len(objs)
