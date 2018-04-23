@@ -7,6 +7,7 @@ from api.v1.views import app_views, states
 from os import getenv
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views, url_prefix='/api/v1')
 app.register_blueprint(states, url_prefix='/api/v1')
 
