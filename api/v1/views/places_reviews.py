@@ -26,7 +26,7 @@ def all_places(place_id):
             review_list.append(review_dict)
     return jsonify(review_list)
 
-@reviews.route('/review/<review_id>', methods=['GET'])
+@reviews.route('/reviews/<review_id>', methods=['GET'])
 def find_review(review_id):
     ''' match review_id to review '''
     review_obj = storage.get('Review', review_id)
