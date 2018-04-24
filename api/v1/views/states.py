@@ -34,8 +34,8 @@ def post_dict():
         return jsonify("Missing name"), 400
 
 
-@states.route('/states/<state_id>', methods=['GET', 'DELETE'])
-def retrieve_state(state_id):
+@states.route('/states/<state_id>', methods=['DELETE'])
+def delete_state(state_id):
     ''' retrieves state if not linked to object'''
     value = storage.get('State', state_id)
     if request.method == 'DELETE':
@@ -48,6 +48,15 @@ def retrieve_state(state_id):
         return jsonify({}), 200
     if value is None:
         abort(404)
+
+@states.route('/states/<state_id>', methods=['GET'])
+def retrieve_state(state_id):
+    '''retrieves state if not linked to object'''
+    state_obj = storage.get('State', state_id)
+    if state_obj is None:
+        abort(404)
+    else:
+        return jsonify(state_obj.to_dict())
 
 @states.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
