@@ -3,7 +3,7 @@
 
 from flask import Flask, jsonify
 from models import storage
-from api.v1.views import app_views, states, cities, amenities, users, places
+from api.v1.views import app_views, states, cities, amenities, users, places, reviews
 from os import getenv
 
 app = Flask(__name__)
@@ -14,6 +14,7 @@ app.register_blueprint(cities, url_prefix='/api/v1')
 app.register_blueprint(amenities, url_prefix='/api/v1')
 app.register_blueprint(users, url_prefix='/api/v1')
 app.register_blueprint(places, url_prefix='/api/v1')
+app.register_blueprint(reviews, url_prefix='/api/v1')
 
 @app.teardown_appcontext
 def storage_closer(exceptions):
