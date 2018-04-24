@@ -7,12 +7,12 @@ from models.state import State
 
 states = Blueprint('states', __name__)
 
-@states.route('/states', method=['GET'])
+@states.route('/states', methods=['GET'])
 def all_states():
     ''' list all states in json format '''
-    stored_states = storage.all(State)
+    stored_states = storage.all('State').values()
     states_list = []
     for state in stored_states:
         state_dict = state.to_dict()
-        state_list.append(state_dict)
-    return states_list
+        states_list.append(state_dict)
+    return jsonify(states_list)
