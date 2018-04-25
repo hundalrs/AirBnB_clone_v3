@@ -2,7 +2,7 @@
 '''view for State'''
 
 from api.v1.views import app_views
-from flask import Blueprint, jsonify, abort, request
+from flask import jsonify, abort, request
 from models import storage
 import json
 from models.user import User
@@ -17,6 +17,7 @@ def all_users():
         users_dict = user.to_dict()
         user_list.append(users_dict)
     return jsonify(user_list)
+
 
 @app_views.route('/users', methods=['POST'])
 def post_user():
@@ -52,6 +53,7 @@ def delete_user(user_id):
         abort(404)
     return jsonify(value.to_dict()), 200
 
+
 @app_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
     '''updates user object'''
@@ -63,8 +65,8 @@ def update_user(user_id):
     except:
         return jsonify('Not a JSON'), 400
     for key, value in data.items():
-        if key != 'id' or key != 'email' or \
-        key != 'created_at' or key != 'updated_at':
+        if key != 'id' or key != 'email'\
+                or key != 'created_at' or key != 'updated_at':
             setattr(user_obj, key, value)
     user_obj.save()
     updated_user = user_obj.to_dict()

@@ -23,6 +23,7 @@ def city_states(state_id):
             city_list.append(city_dict)
     return jsonify(city_list)
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def find_city(city_id):
     ''' match city_id to city '''
@@ -30,6 +31,7 @@ def find_city(city_id):
     if city_obj is None:
         abort(404)
     return jsonify(city_obj.to_dict())
+
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def post_city(state_id):

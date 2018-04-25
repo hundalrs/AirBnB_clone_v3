@@ -8,7 +8,6 @@ import json
 from models.state import State
 
 
-
 @app_views.route('/states', methods=['GET'])
 def all_states():
     ''' list all states in json format '''
@@ -18,6 +17,7 @@ def all_states():
         state_dict = state.to_dict()
         states_list.append(state_dict)
     return jsonify(states_list)
+
 
 @app_views.route('/states', methods=['POST'])
 def post_state():
@@ -49,6 +49,7 @@ def delete_state(state_id):
     if value is None:
         abort(404)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'])
 def retrieve_state(state_id):
     '''retrieves state if not linked to object'''
@@ -57,6 +58,7 @@ def retrieve_state(state_id):
         abort(404)
     else:
         return jsonify(state_obj.to_dict())
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):

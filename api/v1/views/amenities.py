@@ -18,6 +18,7 @@ def all_amenities():
         amenity_list.append(amenity_dict)
     return jsonify(amenity_list)
 
+
 @app_views.route('/amenities', methods=['POST'])
 def post_amenity():
     '''transforms http body request to a dictionary'''
@@ -48,6 +49,7 @@ def retrieve_amenity(amenity_id):
     if value is None:
         abort(404)
     return jsonify(value.to_dict()), 200
+
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def update_amenity(amenity_id):

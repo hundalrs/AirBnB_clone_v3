@@ -24,6 +24,7 @@ def all_places(city_id):
             place_list.append(place_dict)
     return jsonify(place_list)
 
+
 @app_views.route('/places/<place_id>', methods=['GET'])
 def find_place(place_id):
     ''' match place_id to place '''
@@ -31,6 +32,7 @@ def find_place(place_id):
     if place_obj is None:
         abort(404)
     return jsonify(place_obj.to_dict())
+
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
 def post_place(city_id):

@@ -25,6 +25,7 @@ def all_places_reviews(place_id):
             review_list.append(review_dict)
     return jsonify(review_list)
 
+
 @app_views.route('/reviews/<review_id>', methods=['GET'])
 def find_review(review_id):
     ''' match review_id to review '''
@@ -32,6 +33,7 @@ def find_review(review_id):
     if review_obj is None:
         abort(404)
     return jsonify(review_obj.to_dict())
+
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
 def post_review(place_id):
