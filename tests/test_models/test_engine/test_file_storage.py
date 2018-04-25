@@ -154,6 +154,7 @@ class testFileStorage(unittest.TestCase):
             self.assertTrue(value['id'] != my_id)
 
     def test_count(self):
+        ''' test count '''
         fs = FileStorage()
         new = State()
         fs.new(new)
@@ -162,6 +163,7 @@ class testFileStorage(unittest.TestCase):
         self.assertTrue(len(stored), self.storage.count('State'))
 
     def test_get(self):
+        ''' test get '''
         fs = FileStorage()
         new = State()
         new.name = "Wyoming"
