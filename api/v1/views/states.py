@@ -22,9 +22,8 @@ def all_states():
 @app_views.route('/states', methods=['POST'])
 def post_state():
     '''transforms http body request to a dictionary'''
-    try:
-        data = request.get_json()
-    except:
+    data = request.get_json()
+    if data is None:
         return jsonify("Not a JSON"), 400
     if 'name' in data:
         new_state = State(**data)
@@ -66,9 +65,8 @@ def update_state(state_id):
     state_obj = storage.get('State', state_id)
     if state_obj is None:
         abort(404)
-    try:
-        data = request.get_json()
-    except:
+    data = request.get_json()
+    if data is None:
         return jsonify('Not a JSON'), 400
     for key, value in data.items():
         if key != 'id' or key != 'created_at' or key != 'updated_at':
