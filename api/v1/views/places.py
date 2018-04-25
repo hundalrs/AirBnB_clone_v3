@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''view for Place'''
 
+from api.v1.views import app_views
 from flask import Blueprint, jsonify, abort, request
 from models import storage
 import json
@@ -8,10 +9,8 @@ from models.city import City
 from models.place import Place
 from models.user import User
 
-places = Blueprint('places', __name__)
 
-
-@places.route('/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
 def all_places(city_id):
     ''' list all places in json format '''
     city_obj = storage.get('City', city_id)
@@ -25,7 +24,7 @@ def all_places(city_id):
             place_list.append(place_dict)
     return jsonify(place_list)
 
-@places.route('/places/<place_id>', methods=['GET'])
+@app_views.route('/places/<place_id>', methods=['GET'])
 def find_place(place_id):
     ''' match place_id to place '''
     place_obj = storage.get('Place', place_id)
@@ -33,7 +32,7 @@ def find_place(place_id):
         abort(404)
     return jsonify(place_obj.to_dict())
 
-@places.route('/cities/<city_id>/places', methods=['POST'])
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
 def post_place(city_id):
     '''POST Place'''
     city_obj = storage.get('City', city_id)
@@ -58,7 +57,7 @@ def post_place(city_id):
         return jsonify("Missing name"), 400
 
 
-@places.route('/places/<place_id>', methods=['DELETE'])
+@app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
     ''' deletes place '''
     value = storage.get('Place', place_id)
@@ -71,7 +70,7 @@ def delete_place(place_id):
     return jsonify({}), 200
 
 
-@places.route('/places/<place_id>', methods=['PUT'])
+@app_views.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
     '''updates place object'''
     place_obj = storage.get('Place', place_id)

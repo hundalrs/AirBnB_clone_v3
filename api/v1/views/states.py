@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 '''view for State'''
 
+from api.v1.views import app_views
 from flask import Blueprint, jsonify, abort, request
 from models import storage
 import json
 from models.state import State
 
-states = Blueprint('states', __name__)
 
 
-@states.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'])
 def all_states():
     ''' list all states in json format '''
     stored_states = storage.all('State').values()
@@ -19,8 +19,8 @@ def all_states():
         states_list.append(state_dict)
     return jsonify(states_list)
 
-@states.route('/states', methods=['POST'])
-def post_dict():
+@app_views.route('/states', methods=['POST'])
+def post_state():
     '''transforms http body request to a dictionary'''
     try:
         data = request.get_json()
@@ -34,7 +34,7 @@ def post_dict():
         return jsonify("Missing name"), 400
 
 
-@states.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     ''' retrieves state if not linked to object'''
     value = storage.get('State', state_id)
@@ -49,7 +49,7 @@ def delete_state(state_id):
     if value is None:
         abort(404)
 
-@states.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'])
 def retrieve_state(state_id):
     '''retrieves state if not linked to object'''
     state_obj = storage.get('State', state_id)
@@ -58,7 +58,7 @@ def retrieve_state(state_id):
     else:
         return jsonify(state_obj.to_dict())
 
-@states.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     '''updates state object'''
     state_obj = storage.get('State', state_id)

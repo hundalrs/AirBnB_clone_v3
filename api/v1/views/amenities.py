@@ -1,15 +1,14 @@
 #!/usr/bin/python3
 '''view for State'''
 
+from api.v1.views import app_views
 from flask import Blueprint, jsonify, abort, request
 from models import storage
 import json
 from models.amenity import Amenity
 
-amenities = Blueprint('amenities', __name__)
 
-
-@amenities.route('/amenities', methods=['GET'])
+@app_views.route('/amenities', methods=['GET'])
 def all_amenities():
     ''' list all amenities in json format '''
     stored_amenities = storage.all('Amenity').values()
@@ -19,8 +18,8 @@ def all_amenities():
         amenity_list.append(amenity_dict)
     return jsonify(amenity_list)
 
-@amenities.route('/amenities', methods=['POST'])
-def post_dict():
+@app_views.route('/amenities', methods=['POST'])
+def post_amenity():
     '''transforms http body request to a dictionary'''
     try:
         data = request.get_json()
@@ -34,7 +33,7 @@ def post_dict():
         return jsonify("Missing name"), 400
 
 
-@amenities.route('/amenities/<amenity_id>', methods=['GET', 'DELETE'])
+@app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE'])
 def retrieve_amenity(amenity_id):
     ''' retrieves state if not linked to object'''
     value = storage.get('Amenity', amenity_id)
@@ -50,7 +49,7 @@ def retrieve_amenity(amenity_id):
         abort(404)
     return jsonify(value.to_dict()), 200
 
-@amenities.route('/amenities/<amenity_id>', methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def update_amenity(amenity_id):
     '''updates amenity object'''
     amenity_obj = storage.get('Amenity', amenity_id)

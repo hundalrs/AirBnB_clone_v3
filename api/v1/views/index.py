@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 '''module that returns JSON status "OK"'''
 
-from flask import jsonify, Blueprint
+from flask import jsonify
 from models import storage
+from api.v1.views import app_views
 
-app_views = Blueprint('app_views', __name__)
 
 @app_views.route('/status')
 def status():

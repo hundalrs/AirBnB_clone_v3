@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''view for Place'''
 
+from api.v1.views import app_views
 from flask import Blueprint, jsonify, abort, request
 from models import storage
 import json
@@ -9,11 +10,9 @@ from models.place import Place
 from models.user import User
 from models.review import Review
 
-reviews = Blueprint('reviews', __name__)
 
-
-@reviews.route('/places/<place_id>/reviews', methods=['GET'])
-def all_places(place_id):
+@app_views.route('/places/<place_id>/reviews', methods=['GET'])
+def all_places_reviews(place_id):
     ''' list all places in json format '''
     place_obj = storage.get('Place', place_id)
     if place_obj is None:
@@ -26,7 +25,7 @@ def all_places(place_id):
             review_list.append(review_dict)
     return jsonify(review_list)
 
-@reviews.route('/reviews/<review_id>', methods=['GET'])
+@app_views.route('/reviews/<review_id>', methods=['GET'])
 def find_review(review_id):
     ''' match review_id to review '''
     review_obj = storage.get('Review', review_id)
@@ -34,7 +33,7 @@ def find_review(review_id):
         abort(404)
     return jsonify(review_obj.to_dict())
 
-@reviews.route('/places/<place_id>/reviews', methods=['POST'])
+@app_views.route('/places/<place_id>/reviews', methods=['POST'])
 def post_review(place_id):
     '''POST Review'''
     place_obj = storage.get('Place', place_id)
@@ -59,7 +58,7 @@ def post_review(place_id):
         return jsonify("Missing text"), 400
 
 
-@reviews.route('/reviews/<review_id>', methods=['DELETE'])
+@app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
     ''' deletes review '''
     value = storage.get('Review', review_id)
@@ -72,7 +71,7 @@ def delete_review(review_id):
     return jsonify({}), 200
 
 
-@reviews.route('/reviews/<review_id>', methods=['PUT'])
+@app_views.route('/reviews/<review_id>', methods=['PUT'])
 def update_review(review_id):
     '''updates review object'''
     review_obj = storage.get('Review', review_id)

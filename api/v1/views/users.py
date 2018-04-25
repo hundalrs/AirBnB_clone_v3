@@ -1,15 +1,14 @@
 #!/usr/bin/python3
 '''view for State'''
 
+from api.v1.views import app_views
 from flask import Blueprint, jsonify, abort, request
 from models import storage
 import json
 from models.user import User
 
-users = Blueprint('users', __name__)
 
-
-@users.route('/users', methods=['GET'])
+@app_views.route('/users', methods=['GET'])
 def all_users():
     ''' list all amenities in json format '''
     stored_users = storage.all('User').values()
@@ -19,8 +18,8 @@ def all_users():
         user_list.append(users_dict)
     return jsonify(user_list)
 
-@users.route('/users', methods=['POST'])
-def post_dict():
+@app_views.route('/users', methods=['POST'])
+def post_user():
     '''transforms http body request to a dictionary'''
     try:
         data = request.get_json()
@@ -37,7 +36,7 @@ def post_dict():
             return jsonify('Missing password'), 400
 
 
-@users.route('/users/<user_id>', methods=['GET', 'DELETE'])
+@app_views.route('/users/<user_id>', methods=['GET', 'DELETE'])
 def delete_user(user_id):
     ''' delete user and match to user_id'''
     value = storage.get('User', user_id)
@@ -53,7 +52,7 @@ def delete_user(user_id):
         abort(404)
     return jsonify(value.to_dict()), 200
 
-@users.route('/users/<user_id>', methods=['PUT'])
+@app_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
     '''updates user object'''
     user_obj = storage.get('User', user_id)
