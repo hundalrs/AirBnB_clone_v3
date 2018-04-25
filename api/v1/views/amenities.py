@@ -22,9 +22,8 @@ def all_amenities():
 @app_views.route('/amenities', methods=['POST'])
 def post_amenity():
     '''transforms http body request to a dictionary'''
-    try:
-        data = request.get_json()
-    except:
+    data = request.get_json()
+    if data is None:
         return jsonify("Not a JSON"), 400
     if 'name' in data:
         new_amenity = Amenity(**data)
@@ -57,9 +56,8 @@ def update_amenity(amenity_id):
     amenity_obj = storage.get('Amenity', amenity_id)
     if amenity_obj is None:
         abort(404)
-    try:
-        data = request.get_json()
-    except:
+    data = request.get_json()
+    if data is None:
         return jsonify('Not a JSON'), 400
     for key, value in data.items():
         if key != 'id' or key != 'created_at' or key != 'updated_at':
