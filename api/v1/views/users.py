@@ -22,9 +22,8 @@ def all_users():
 @app_views.route('/users', methods=['POST'])
 def post_user():
     '''transforms http body request to a dictionary'''
-    try:
-        data = request.get_json()
-    except:
+    data = request.get_json()
+    if data is None:
         return jsonify("Not a JSON"), 400
     if 'email' in data and 'password' in data:
         new_user = User(**data)
@@ -60,9 +59,8 @@ def update_user(user_id):
     user_obj = storage.get('User', user_id)
     if user_obj is None:
         abort(404)
-    try:
-        data = request.get_json()
-    except:
+    data = request.get_json()
+    if data is None:
         return jsonify('Not a JSON'), 400
     for key, value in data.items():
         if key != 'id' or key != 'email'\
